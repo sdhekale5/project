@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Git Checkout') {
+            steps {
+                git credentialsId: 'github', url: 'https://github.com/sdhekale5/project.git'
+            }
+        }
+       stage('mvn build') {
+         steps {
+               sh 'mvn clean package'
+            }
+        }
+        stage('nexus build') {
+         steps {
+               nexusArtifactUploader artifacts: [[artifactId: 'myweb', classifier: '', file: 'target/myweb-8.2.34.war', type: 'war']], credentialsId: 'nexus', groupId: 'in.javahome', nexusUrl: '34.229.164.48:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-releases', version: '8.2.34'
+            }
+        }
+        stage('Docker build') {
+         steps {
+               sh 'docker build -t myapp:latest .'
+            }
+        }
+    }
+}
