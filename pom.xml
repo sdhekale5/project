@@ -49,7 +49,7 @@
 
                 <repository>
                     <id>nexusRepo</id>
-                    <url>http://34.224.166.142:8081/repository/myrelease/</url>
+                    <url>http://34.229.164.48:8081/maven-releases/</url>
                 </repository>
         </distributionManagement>
 
